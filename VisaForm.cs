@@ -31,7 +31,7 @@ namespace Embassy
             {
                 using (var image = Pix.LoadFromFile(imagePath))
                 {
-                    using (var page = engine.Process(image)) //, new Rect(200, 40, 100, 10)
+                    using (var page = engine.Process(image, new Rect(300, 10, 200, 100))) //
                         {
                         passportNoBox.Text = page.GetText();
                     }
@@ -41,10 +41,7 @@ namespace Embassy
             }
             catch (Exception er)
             {
-                //Trace.TraceError(er.ToString());
                 MessageBox.Show("Unexpected Error: " + er.Message);
-                MessageBox.Show("Details: ");
-                MessageBox.Show(er.ToString());
             }
 
 
