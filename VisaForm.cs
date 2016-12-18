@@ -70,5 +70,12 @@ namespace Embassy
             }
 
         }
+
+        private void VisaForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Hide();
+            ControlForm cForm = new ControlForm();
+            cForm.Show();
+        }
     }
 }

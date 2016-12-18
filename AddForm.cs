@@ -12,18 +12,17 @@ namespace Embassy
 {
     public partial class AddForm : Form
     {
+        private int ID;
         private const string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Aušrė\\documents\\visual studio 2015\\Projects\\Embassy\\Embassy\\Embassy.mdf;Integrated Security=True";
         public AddForm()
         {
             InitializeComponent();
-            addButton.Visible = true;
 
             monthCalendar.MinDate = System.DateTime.Today;
-            ShowBoxes();
+
+            ShowAdd();
             FillComboBox();
-            //providerBox.DataSource = 
-                
-            //add possible provider list
+
         }
 
         public AddForm (String passport)
@@ -32,15 +31,16 @@ namespace Embassy
 
             monthCalendar.MinDate = System.DateTime.Today;
 
-            ShowLabels();
+            ShowUpdateDelete();
             ShowContent(passport);
-
 
         }
     
 
         private void addButton_Click(object sender, EventArgs e)
         {
+            if (addButton.Text == "Add")
+            {
             using (var db = new EmbassyEntitiesFramework())
             {
                 db.Database.Connection.ConnectionString = connectionString;
@@ -50,69 +50,74 @@ namespace Embassy
                 v.Expiration = monthCalendar.SelectionRange.Start;
                 v.Granted_by = Int32.Parse(providerBox.Text);
 
-                db.Visa.Add(v);
-                //db.Entry(v).State = System.Data.Entity.EntityState.Added;
+                //db.Visa.Add(v);
+                db.Entry(v).State = System.Data.Entity.EntityState.Added;
                 db.SaveChanges();
 
             }
             addButton.Visible = false;
+            }
+            else if (addButton.Text == "Update")
+            {
+                using (var db = new EmbassyEntitiesFramework())
+                {
+                    db.Database.Connection.ConnectionString = connectionString;
+
+                    Visa v = db.Visa.Where(visa => visa.Id == ID).FirstOrDefault<Visa>();
+                    v.Type = typeComboBox.Text;
+                    v.Received_by = receiverBox.Text;
+                    v.Expiration = monthCalendar.SelectionRange.Start;
+                    v.Granted_by = Int32.Parse(providerBox.Text);
+
+                    db.Entry(v).State = System.Data.Entity.EntityState.Modified;
+                    //db.Entry(v).State = System.Data.Entity.EntityState.Added;
+                    db.SaveChanges();
+
+                }
+                addButton.Visible = false;
+
+            }
+            
             
         }
 
-        private void ShowLabels()
+        private void ShowUpdateDelete()
         {
-            userProviderLabel.Visible = true;
-            userReceiverLabel.Visible = true;
-            userTypeLabel.Visible = true;
-            providerBox.Visible = false;
-            receiverBox.Visible = false;
-            typeComboBox.Visible = false;
-            addButton.Visible = false;
+
+            addButton.Text = "Update";
+            deleteButton.Visible = true;
         }
 
-        private void ShowBoxes()
+        private void ShowAdd()
         {
-            userProviderLabel.Visible = false;
-            userReceiverLabel.Visible = false;
-            userTypeLabel.Visible = false;
-            providerBox.Visible = true;
-            receiverBox.Visible = true;
-            typeComboBox.Visible = true;
-            addButton.Visible = true;
+            deleteButton.Visible = false; 
+            addButton.Text = "Add";
         }
 
         private void ShowContent(string passport)
         {
+            FillComboBox();
             using (var db = new EmbassyEntitiesFramework())
             {
                 db.Database.Connection.ConnectionString = connectionString;
-                var person = from p in db.Visa
-                             where p.Received_by == passport
-                             select p;
-                foreach (var p in person)
-                {
-                    userProviderLabel.Text = p.Granted_by.ToString();
-                    userReceiverLabel.Text = p.Received_by.ToString();
-                    userTypeLabel.Text = p.Type.ToString();
-                    //monthCalendar.TodayDate = p.Expiration;
-                    monthCalendar.SetDate(p.Expiration);
-                }
-                
-                //from employee in db.Employee
-                //           where employee.Surname == providerBox.Text
-                //           select employee.Id;
+                Visa v = db.Visa.Where(visa => visa.Received_by == passport).FirstOrDefault<Visa>();
+
+                providerBox.Text = v.Granted_by.ToString();
+                receiverBox.Text = v.Received_by.ToString();
+                typeComboBox.Text = v.Type.ToString();
+                monthCalendar.SetDate(v.Expiration);
+                ID = v.Id;
 
             }
 
         }
+
 
         private void FillComboBox()
         {
             using (var db = new EmbassyEntitiesFramework())
             {
                 db.Database.Connection.ConnectionString = connectionString;
-                //var person = from p in db.Visa
-                //             select p;
 
                 foreach(var p in db.Visa)
                 {
@@ -120,6 +125,24 @@ namespace Embassy
                 }
                 
             }
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            
+            using (var db = new EmbassyEntitiesFramework())
+            {
+                db.Database.Connection.ConnectionString = connectionString;
+
+                Visa v = db.Visa.Where(visa => visa.Id == ID).FirstOrDefault<Visa>();
+
+                db.Entry(v).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+
+            }
+            deleteButton.Visible = false;
+            addButton.Visible = false;
+
         }
     }
 }
