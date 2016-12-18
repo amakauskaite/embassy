@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tesseract;
 using System.Drawing.Drawing2D;
+using System.Text.RegularExpressions;
 
 namespace Embassy
 {
@@ -24,25 +25,7 @@ namespace Embassy
 
         private void comfirmationButton_Click(object sender, EventArgs e)
         {
-            //figure our the rect thingy            
-            try
-            {  
-            using (var engine = new TesseractEngine(@"C:\Users\Aušrė\Documents\Visual Studio 2015\Projects\Embassy\tessdata", "eng", EngineMode.Default))
-            {
-                using (var image = Pix.LoadFromFile(imagePath))
-                {
-                    using (var page = engine.Process(image, new Rect(300, 10, 200, 100))) //
-                        {
-                        passportNoBox.Text = page.GetText();
-                    }
-                }
-
-            }
-            }
-            catch (Exception er)
-            {
-                MessageBox.Show("Unexpected Error: " + er.Message);
-            }
+            
 
 
         }
@@ -55,9 +38,34 @@ namespace Embassy
                 imagePath = openFileDialog.FileName;
                 passportBox.ImageLocation = imagePath;
                 passportBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                numberRecognition();
                 //passport = new Bitmap(openFileDialog.FileName);
                 // MessageBox.Show(openFileDialog.FileName);
             }
+        }
+
+        private void numberRecognition()
+        {
+            //figure our the rect thingy            
+            try
+            {
+                using (var engine = new TesseractEngine(@"C:\Users\Aušrė\Documents\Visual Studio 2015\Projects\Embassy\tessdata", "eng", EngineMode.Default))
+                {
+                    using (var image = Pix.LoadFromFile(imagePath))
+                    {
+                        using (var page = engine.Process(image, new Rect(300, 10, 200, 100))) //
+                        {
+                            passportNoBox.Text = String.Join("", page.GetText().Where(char.IsDigit));
+                        }
+                    }
+
+                }
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show("Unexpected Error: " + er.Message);
+            }
+
         }
     }
 }
