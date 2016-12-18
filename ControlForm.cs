@@ -25,14 +25,14 @@ namespace Embassy
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            //this.Hide();
+            this.Hide();
             VisaForm vForm = new VisaForm();
             vForm.Show();
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            //this.Hide();
+            this.Hide();
             AddForm aForm = new AddForm();
             aForm.Show();
         }
@@ -47,12 +47,18 @@ namespace Embassy
 
         private void ControlForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            ExitButton_Click(sender, e);
         }
 
         private void updateButton_Click(object sender, EventArgs e)
         {
             //this.Hide();
+            InformationForm iForm = new InformationForm();
+            iForm.Show();
+        }
+
+        private void viewButton_Click(object sender, EventArgs e)
+        {
             InformationForm iForm = new InformationForm();
             iForm.Show();
         }

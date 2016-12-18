@@ -25,8 +25,11 @@ namespace Embassy
 
         private void comfirmationButton_Click(object sender, EventArgs e)
         {
-            
-
+            if (!String.IsNullOrEmpty(passportNoBox.Text))
+            {
+                AddForm a = new AddForm(passportNoBox.Text);
+                a.Show();
+            }
 
         }
 
@@ -66,6 +69,13 @@ namespace Embassy
                 MessageBox.Show("Unexpected Error: " + er.Message);
             }
 
+        }
+
+        private void VisaForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Hide();
+            ControlForm cForm = new ControlForm();
+            cForm.Show();
         }
     }
 }

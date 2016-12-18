@@ -30,23 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.embassyDataSet = new Embassy.EmbassyDataSet();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.visaTableAdapter = new Embassy.EmbassyDataSetTableAdapters.VisaTableAdapter();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.embassyDataSet = new Embassy.EmbassyDataSet();
+            this.visaTableAdapter = new Embassy.EmbassyDataSetTableAdapters.VisaTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.embassyDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.embassyDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -61,20 +60,6 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(545, 197);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // embassyDataSet
-            // 
-            this.embassyDataSet.DataSetName = "EmbassyDataSet";
-            this.embassyDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // bindingSource1
-            // 
-            this.bindingSource1.DataMember = "Visa";
-            this.bindingSource1.DataSource = this.embassyDataSet;
-            // 
-            // visaTableAdapter
-            // 
-            this.visaTableAdapter.ClearBeforeFill = true;
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -111,15 +96,30 @@
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataMember = "Visa";
+            this.bindingSource1.DataSource = this.embassyDataSet;
+            // 
+            // embassyDataSet
+            // 
+            this.embassyDataSet.DataSetName = "EmbassyDataSet";
+            this.embassyDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // visaTableAdapter
+            // 
+            this.visaTableAdapter.ClearBeforeFill = true;
+            // 
             // InformationForm
             // 
             this.ClientSize = new System.Drawing.Size(637, 255);
             this.Controls.Add(this.dataGridView1);
             this.Name = "InformationForm";
+            this.Text = "All visas";
             this.Load += new System.EventHandler(this.InformationForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.embassyDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.embassyDataSet)).EndInit();
             this.ResumeLayout(false);
 
         }

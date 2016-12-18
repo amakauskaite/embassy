@@ -60,15 +60,17 @@
             this.numberButton.Name = "numberButton";
             this.numberButton.Size = new System.Drawing.Size(75, 23);
             this.numberButton.TabIndex = 9;
-            this.numberButton.Text = "Get Number";
+            this.numberButton.Text = "Search";
             this.numberButton.UseVisualStyleBackColor = true;
             this.numberButton.Click += new System.EventHandler(this.comfirmationButton_Click);
             // 
             // passportBox
             // 
+            this.passportBox.Image = global::Embassy.Properties.Resources.international_pass;
             this.passportBox.Location = new System.Drawing.Point(183, 25);
             this.passportBox.Name = "passportBox";
             this.passportBox.Size = new System.Drawing.Size(370, 242);
+            this.passportBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.passportBox.TabIndex = 10;
             this.passportBox.TabStop = false;
             // 
@@ -98,8 +100,9 @@
             this.Controls.Add(this.passportNumberLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VisaForm";
-            this.Text = "Register new travel visa";
+            this.Text = "Search for a specific visa";
             this.TransparencyKey = System.Drawing.Color.Pink;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.VisaForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.passportBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
