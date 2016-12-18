@@ -37,6 +37,9 @@
             this.providerBox = new System.Windows.Forms.ComboBox();
             this.receiverLabel = new System.Windows.Forms.Label();
             this.receiverBox = new System.Windows.Forms.TextBox();
+            this.userTypeLabel = new System.Windows.Forms.Label();
+            this.userProviderLabel = new System.Windows.Forms.Label();
+            this.userReceiverLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // addButton
@@ -53,7 +56,7 @@
             // typeLabel
             // 
             this.typeLabel.AutoSize = true;
-            this.typeLabel.Location = new System.Drawing.Point(55, 30);
+            this.typeLabel.Location = new System.Drawing.Point(65, 51);
             this.typeLabel.Name = "typeLabel";
             this.typeLabel.Size = new System.Drawing.Size(34, 13);
             this.typeLabel.TabIndex = 4;
@@ -71,7 +74,7 @@
             // providerLabel
             // 
             this.providerLabel.AutoSize = true;
-            this.providerLabel.Location = new System.Drawing.Point(55, 91);
+            this.providerLabel.Location = new System.Drawing.Point(65, 112);
             this.providerLabel.Name = "providerLabel";
             this.providerLabel.Size = new System.Drawing.Size(66, 13);
             this.providerLabel.TabIndex = 6;
@@ -87,7 +90,7 @@
             "Long-stay",
             "Immigrant",
             "Official"});
-            this.typeComboBox.Location = new System.Drawing.Point(58, 46);
+            this.typeComboBox.Location = new System.Drawing.Point(68, 67);
             this.typeComboBox.Name = "typeComboBox";
             this.typeComboBox.Size = new System.Drawing.Size(121, 21);
             this.typeComboBox.TabIndex = 7;
@@ -105,7 +108,7 @@
             // 
             this.providerBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.providerBox.FormattingEnabled = true;
-            this.providerBox.Location = new System.Drawing.Point(58, 107);
+            this.providerBox.Location = new System.Drawing.Point(68, 128);
             this.providerBox.Name = "providerBox";
             this.providerBox.Size = new System.Drawing.Size(121, 21);
             this.providerBox.TabIndex = 9;
@@ -113,7 +116,7 @@
             // receiverLabel
             // 
             this.receiverLabel.AutoSize = true;
-            this.receiverLabel.Location = new System.Drawing.Point(55, 146);
+            this.receiverLabel.Location = new System.Drawing.Point(65, 167);
             this.receiverLabel.Name = "receiverLabel";
             this.receiverLabel.Size = new System.Drawing.Size(70, 13);
             this.receiverLabel.TabIndex = 10;
@@ -121,16 +124,46 @@
             // 
             // receiverBox
             // 
-            this.receiverBox.Location = new System.Drawing.Point(58, 162);
+            this.receiverBox.Location = new System.Drawing.Point(68, 183);
             this.receiverBox.Name = "receiverBox";
             this.receiverBox.Size = new System.Drawing.Size(121, 20);
             this.receiverBox.TabIndex = 11;
+            // 
+            // userTypeLabel
+            // 
+            this.userTypeLabel.AutoSize = true;
+            this.userTypeLabel.Location = new System.Drawing.Point(72, 70);
+            this.userTypeLabel.Name = "userTypeLabel";
+            this.userTypeLabel.Size = new System.Drawing.Size(31, 13);
+            this.userTypeLabel.TabIndex = 12;
+            this.userTypeLabel.Text = "none";
+            // 
+            // userProviderLabel
+            // 
+            this.userProviderLabel.AutoSize = true;
+            this.userProviderLabel.Location = new System.Drawing.Point(72, 131);
+            this.userProviderLabel.Name = "userProviderLabel";
+            this.userProviderLabel.Size = new System.Drawing.Size(31, 13);
+            this.userProviderLabel.TabIndex = 13;
+            this.userProviderLabel.Text = "none";
+            // 
+            // userReceiverLabel
+            // 
+            this.userReceiverLabel.AutoSize = true;
+            this.userReceiverLabel.Location = new System.Drawing.Point(72, 186);
+            this.userReceiverLabel.Name = "userReceiverLabel";
+            this.userReceiverLabel.Size = new System.Drawing.Size(31, 13);
+            this.userReceiverLabel.TabIndex = 14;
+            this.userReceiverLabel.Text = "none";
             // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(458, 272);
+            this.Controls.Add(this.userReceiverLabel);
+            this.Controls.Add(this.userProviderLabel);
+            this.Controls.Add(this.userTypeLabel);
             this.Controls.Add(this.receiverBox);
             this.Controls.Add(this.receiverLabel);
             this.Controls.Add(this.providerBox);
@@ -141,7 +174,7 @@
             this.Controls.Add(this.typeLabel);
             this.Controls.Add(this.addButton);
             this.Name = "AddForm";
-            this.Text = "AddForm";
+            this.Text = "Visa information";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,5 +190,8 @@
         private System.Windows.Forms.ComboBox providerBox;
         private System.Windows.Forms.Label receiverLabel;
         private System.Windows.Forms.TextBox receiverBox;
+        private System.Windows.Forms.Label userTypeLabel;
+        private System.Windows.Forms.Label userProviderLabel;
+        private System.Windows.Forms.Label userReceiverLabel;
     }
 }

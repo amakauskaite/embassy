@@ -60,7 +60,7 @@
             this.numberButton.Name = "numberButton";
             this.numberButton.Size = new System.Drawing.Size(75, 23);
             this.numberButton.TabIndex = 9;
-            this.numberButton.Text = "Get Number";
+            this.numberButton.Text = "Search";
             this.numberButton.UseVisualStyleBackColor = true;
             this.numberButton.Click += new System.EventHandler(this.comfirmationButton_Click);
             // 
@@ -98,7 +98,7 @@
             this.Controls.Add(this.passportNumberLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VisaForm";
-            this.Text = "Register new travel visa";
+            this.Text = "Search for a specific visa";
             this.TransparencyKey = System.Drawing.Color.Pink;
             ((System.ComponentModel.ISupportInitialize)(this.passportBox)).EndInit();
             this.ResumeLayout(false);
