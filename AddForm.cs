@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -41,21 +42,31 @@ namespace Embassy
         {
             if (addButton.Text == "Add")
             {
-            using (var db = new EmbassyEntitiesFramework())
-            {
-                db.Database.Connection.ConnectionString = connectionString;
-                Visa v = new Visa();
-                v.Type = typeComboBox.Text;
-                v.Received_by = receiverBox.Text;
-                v.Expiration = monthCalendar.SelectionRange.Start;
-                v.Granted_by = Int32.Parse(providerBox.Text);
+                if(!String.IsNullOrWhiteSpace(typeComboBox.Text)||!String.IsNullOrWhiteSpace(receiverBox.Text)
+                    || !String.IsNullOrWhiteSpace(providerBox.Text))
+                {
+                    using (var db = new EmbassyEntitiesFramework())
+                    {
+                        db.Database.Connection.ConnectionString = connectionString;
+                        Visa v = new Visa();
+                        v.Type = typeComboBox.Text;
+                        v.Received_by = receiverBox.Text;
+                        v.Expiration = monthCalendar.SelectionRange.Start;
+                        v.Granted_by = Int32.Parse(providerBox.Text);
 
-                //db.Visa.Add(v);
-                db.Entry(v).State = System.Data.Entity.EntityState.Added;
-                db.SaveChanges();
+                        //db.Visa.Add(v);
+                        db.Entry(v).State = System.Data.Entity.EntityState.Added;
+                        db.SaveChanges();
 
-            }
-            addButton.Visible = false;
+                    }
+                    addButton.Visible = false;
+
+                }
+                else
+                {
+                    MessageBox.Show("Fill all fields, please!");
+                }
+            
             }
             else if (addButton.Text == "Update")
             {
@@ -70,7 +81,6 @@ namespace Embassy
                     v.Granted_by = Int32.Parse(providerBox.Text);
 
                     db.Entry(v).State = System.Data.Entity.EntityState.Modified;
-                    //db.Entry(v).State = System.Data.Entity.EntityState.Added;
                     db.SaveChanges();
 
                 }
@@ -96,17 +106,25 @@ namespace Embassy
 
         private void ShowContent(string passport)
         {
-            FillComboBox();
+            
             using (var db = new EmbassyEntitiesFramework())
             {
                 db.Database.Connection.ConnectionString = connectionString;
                 Visa v = db.Visa.Where(visa => visa.Received_by == passport).FirstOrDefault<Visa>();
-
-                providerBox.Text = v.Granted_by.ToString();
-                receiverBox.Text = v.Received_by.ToString();
-                typeComboBox.Text = v.Type.ToString();
-                monthCalendar.SetDate(v.Expiration);
-                ID = v.Id;
+                if (v!=null)
+                {
+                    FillComboBox();
+                    providerBox.Text = v.Granted_by.ToString();
+                    receiverBox.Text = v.Received_by.ToString();
+                    typeComboBox.Text = v.Type.ToString();
+                    monthCalendar.SetDate(v.Expiration);
+                    ID = v.Id;
+                }
+                else
+                {
+                    MessageBox.Show("Such visa doesn't exist. Try adding it.");
+                }
+                
 
             }
 
@@ -143,6 +161,20 @@ namespace Embassy
             deleteButton.Visible = false;
             addButton.Visible = false;
 
+        }
+
+        private void receiverBox_Validating(object sender, CancelEventArgs e)
+        {
+            string pattern = @"^(\d+)$";
+            if (!Regex.IsMatch(receiverBox.Text, pattern))
+            {
+                e.Cancel = true;
+                receiverBox.BackColor = Color.Tomato;
+            }
+            else
+            {
+                receiverBox.BackColor = Color.White;
+            }
         }
     }
 }

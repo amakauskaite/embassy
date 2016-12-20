@@ -17,6 +17,7 @@ namespace Embassy
     {
         //Bitmap passport;
         private string imagePath;
+        private const string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Aušrė\\documents\\visual studio 2015\\Projects\\Embassy\\Embassy\\Embassy.mdf;Integrated Security=True";
 
         public VisaForm()
         {
@@ -27,8 +28,23 @@ namespace Embassy
         {
             if (!String.IsNullOrEmpty(passportNoBox.Text))
             {
-                AddForm a = new AddForm(passportNoBox.Text);
-                a.Show();
+                using (var db = new EmbassyEntitiesFramework())
+                {
+                    db.Database.Connection.ConnectionString = connectionString;
+                    Visa v = db.Visa.Where(visa => visa.Received_by == passportNoBox.Text).FirstOrDefault<Visa>();
+                    if (v != null)
+                    {
+                        AddForm a = new AddForm(passportNoBox.Text);
+                        a.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Such visa doesn't exist. Try adding it.");
+                    }
+
+
+                }
+
             }
 
         }
@@ -42,14 +58,11 @@ namespace Embassy
                 passportBox.ImageLocation = imagePath;
                 passportBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 numberRecognition();
-                //passport = new Bitmap(openFileDialog.FileName);
-                // MessageBox.Show(openFileDialog.FileName);
             }
         }
 
         private void numberRecognition()
-        {
-            //figure our the rect thingy            
+        {           
             try
             {
                 using (var engine = new TesseractEngine(@"C:\Users\Aušrė\Documents\Visual Studio 2015\Projects\Embassy\tessdata", "eng", EngineMode.Default))
@@ -77,5 +90,20 @@ namespace Embassy
             ControlForm cForm = new ControlForm();
             cForm.Show();
         }
+
+        private void passportNoBox_Validating(object sender, CancelEventArgs e)
+        {
+            string pattern = @"^(\d{6,11})$";
+            if (!Regex.IsMatch(passportNoBox.Text, pattern)&&!String.IsNullOrWhiteSpace(passportNoBox.Text))
+            {
+                e.Cancel = true;
+                passportNoBox.BackColor = Color.Tomato;
+            }
+            else
+            {
+                passportNoBox.BackColor = Color.White;
+            }
+        }
+        
     }
 }

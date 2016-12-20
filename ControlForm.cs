@@ -37,25 +37,12 @@ namespace Embassy
             aForm.Show();
         }
 
-        private void DeleteButton_Click(object sender, EventArgs e)
-        {
-            //this.Hide();
-            InformationForm iForm = new InformationForm();
-            iForm.Show();
-            //do some deletion stuff
-        }
 
         private void ControlForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             ExitButton_Click(sender, e);
         }
 
-        private void updateButton_Click(object sender, EventArgs e)
-        {
-            //this.Hide();
-            InformationForm iForm = new InformationForm();
-            iForm.Show();
-        }
 
         private void viewButton_Click(object sender, EventArgs e)
         {
